@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
-// Enum for piece colors
+// Enum for colors
 enum Color { WHITE, BLACK }
 
-// Abstract class for chess pieces
+// Abstract class for all chess pieces
 abstract class Piece {
     Color color;
 
@@ -11,58 +11,43 @@ abstract class Piece {
         this.color = color;
     }
 
-    public abstract String toString();  // Represent piece as a string
-
     public abstract boolean isValidMove(int startX, int startY, int endX, int endY, Piece[][] board);
+    public abstract String toString();
 }
 
 // Pawn class
 class Pawn extends Piece {
-    public Pawn(Color color) {
-        super(color);
-    }
-
-    @Override
-    public String toString() {
-        return (color == Color.WHITE) ? "P" : "p";
-    }
+    public Pawn(Color color) { super(color); }
 
     @Override
     public boolean isValidMove(int startX, int startY, int endX, int endY, Piece[][] board) {
         int direction = (color == Color.WHITE) ? -1 : 1;
-        if (startY == endY && board[endX][endY] == null && (endX == startX + direction)) {
-            return true;
-        }
-        return false;
+        return startY == endY && endX == startX + direction && board[endX][endY] == null;
     }
+
+    @Override
+    public String toString() { return (color == Color.WHITE) ? "P" : "p"; }
 }
 
 // Rook class
 class Rook extends Piece {
-    public Rook(Color color) {
-        super(color);
-    }
-
-    @Override
-    public String toString() {
-        return (color == Color.WHITE) ? "R" : "r";
-    }
+    public Rook(Color color) { super(color); }
 
     @Override
     public boolean isValidMove(int startX, int startY, int endX, int endY, Piece[][] board) {
-        if (startX == endX || startY == endY) return true;
-        return false;
+        if (startX != endX && startY != endY) return false;  // Move must be straight
+        return true;
     }
+
+    @Override
+    public String toString() { return (color == Color.WHITE) ? "R" : "r"; }
 }
 
 // Chess board class
 class ChessBoard {
-    Piece[][] board;
+    Piece[][] board = new Piece[8][8];
 
-    public ChessBoard() {
-        board = new Piece[8][8];
-        setupBoard();
-    }
+    public ChessBoard() { setupBoard(); }
 
     private void setupBoard() {
         for (int i = 0; i < 8; i++) {
@@ -100,7 +85,7 @@ class ChessBoard {
     }
 }
 
-// Main game class
+// Main Game Class
 public class ChessGame {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
