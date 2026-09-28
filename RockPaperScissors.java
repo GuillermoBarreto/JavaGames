@@ -5,6 +5,7 @@ public class RockPaperScissors {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Random rand = new Random(); // Created once: reusing one Random avoids reseeding every round
         String[] choices = {"Rock", "Paper", "Scissors"};
         String playAgain = "yes";  // Initialize it with "yes" to enter the loop
         
@@ -32,7 +33,6 @@ public class RockPaperScissors {
             }
 
             // Get the computer's choice
-            Random rand = new Random();
             int computerChoice = rand.nextInt(3) + 1; // Random number between 1 and 3
             System.out.println("Computer's choice: " + choices[computerChoice - 1]);
 
