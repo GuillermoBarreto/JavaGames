@@ -22,6 +22,7 @@ public class RockPaperScissors {
             int userChoice;
             if (scanner.hasNextInt()) {
                 userChoice = scanner.nextInt();
+                scanner.nextLine(); // consume the rest of the line so stray tokens don't leak into the next prompt
             } else {
                 System.out.println("Invalid input. Please enter a number between 1 and 3.");
                 scanner.next(); // consume the invalid token
@@ -47,7 +48,7 @@ public class RockPaperScissors {
 
             // Ask if the user wants to play again
             System.out.print("Do you want to play again? (yes/no): ");
-            playAgain = scanner.next();
+            playAgain = scanner.nextLine().trim();
         } while (playAgain.equalsIgnoreCase("yes"));
         
         System.out.println("Thanks for playing!");
