@@ -47,13 +47,7 @@ public class RockPaperScissors {
             System.out.println("Computer's choice: " + choices[computerChoice - 1]);
 
             // Determine the winner
-            if (userChoice == computerChoice) {
-                System.out.println("It's a tie!");
-            } else if ((userChoice == 1 && computerChoice == 3) || (userChoice == 2 && computerChoice == 1) || (userChoice == 3 && computerChoice == 2)) {
-                System.out.println("You win!");
-            } else {
-                System.out.println("Computer wins!");
-            }
+            System.out.println(determineWinner(userChoice, computerChoice));
 
             // Ask if the user wants to play again
             System.out.print("Do you want to play again? (yes/no): ");
@@ -62,5 +56,20 @@ public class RockPaperScissors {
         
         System.out.println("Thanks for playing!");
         scanner.close();
+    }
+
+    /**
+     * Decides the round outcome for the two moves (1 = Rock, 2 = Paper, 3 = Scissors).
+     *
+     * @return "You win!", "Computer wins!", or "It's a tie!"
+     */
+    private static String determineWinner(int userChoice, int computerChoice) {
+        if (userChoice == computerChoice) {
+            return "It's a tie!";
+        }
+        boolean userWins = (userChoice == 1 && computerChoice == 3)
+                || (userChoice == 2 && computerChoice == 1)
+                || (userChoice == 3 && computerChoice == 2);
+        return userWins ? "You win!" : "Computer wins!";
     }
 }
