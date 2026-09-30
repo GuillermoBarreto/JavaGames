@@ -1,6 +1,15 @@
 import java.util.Random;
 import java.util.Scanner;
 
+/**
+ * A console-based Rock, Paper, Scissors game played against the computer.
+ *
+ * <p>The player picks 1 (Rock), 2 (Paper), or 3 (Scissors) each round and
+ * the computer picks randomly. Invalid input is rejected with a prompt to
+ * try again, and the player can play multiple rounds until they decline.</p>
+ *
+ * <p>Run with: {@code javac RockPaperScissors.java && java RockPaperScissors}</p>
+ */
 public class RockPaperScissors {
 
     public static void main(String[] args) {
