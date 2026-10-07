@@ -34,7 +34,7 @@ public class RockPaperScissors {
                 scanner.nextLine(); // consume the rest of the line so stray tokens don't leak into the next prompt
             } else {
                 System.out.println("Invalid input. Please enter a number between 1 and 3.");
-                scanner.next(); // consume the invalid token
+                scanner.nextLine(); // consume the whole line so multi-token garbage like "abc def" doesn't error twice
                 continue;
             }
             if (userChoice < 1 || userChoice > 3) {
