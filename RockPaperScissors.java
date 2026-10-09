@@ -17,7 +17,7 @@ public class RockPaperScissors {
         Random rand = new Random(); // Created once: reusing one Random avoids reseeding every round
         String[] choices = {"Rock", "Paper", "Scissors"};
         String playAgain = "yes";  // Initialize it with "yes" to enter the loop
-        
+
         do {
             // Display the game options to the user
             System.out.println("Rock, Paper, Scissors Game");
@@ -26,15 +26,17 @@ public class RockPaperScissors {
             System.out.println("2. Paper");
             System.out.println("3. Scissors");
             System.out.print("Enter your choice (1-3): ");
-            
+
             // Get the user's choice
             int userChoice;
             if (scanner.hasNextInt()) {
                 userChoice = scanner.nextInt();
                 scanner.nextLine(); // consume the rest of the line so stray tokens don't leak into the next prompt
             } else {
+                if (readLineOrNull(scanner) == null) {
+                    break; // input stream closed (Ctrl+D / piped input ran out): quit instead of crashing
+                }
                 System.out.println("Invalid input. Please enter a number between 1 and 3.");
-                scanner.nextLine(); // consume the whole line so multi-token garbage like "abc def" doesn't error twice
                 continue;
             }
             if (userChoice < 1 || userChoice > 3) {
@@ -51,16 +53,30 @@ public class RockPaperScissors {
 
             // Ask if the user wants to play again
             System.out.print("Do you want to play again? (yes/no): ");
-            playAgain = scanner.nextLine().trim();
+            playAgain = readLineOrNull(scanner);
+            if (playAgain == null) {
+                break; // input stream closed: quit instead of crashing
+            }
+            playAgain = playAgain.trim();
         } while (playAgain.equalsIgnoreCase("yes"));
-        
+
         System.out.println("Thanks for playing!");
         scanner.close();
     }
 
     /**
+     * Reads one line of input, or {@code null} when the input stream is
+     * exhausted or closed (Ctrl+D on a terminal, or piped input that ran out).
+     */
+    private static String readLineOrNull(Scanner scanner) {
+        return scanner.hasNextLine() ? scanner.nextLine() : null;
+    }
+
+    /**
      * Decides the round outcome for the two moves (1 = Rock, 2 = Paper, 3 = Scissors).
      *
+     * @param userChoice     the player's move (1 = Rock, 2 = Paper, 3 = Scissors)
+     * @param computerChoice the computer's move (1 = Rock, 2 = Paper, 3 = Scissors)
      * @return "You win!", "Computer wins!", or "It's a tie!"
      */
     private static String determineWinner(int userChoice, int computerChoice) {
